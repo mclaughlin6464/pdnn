@@ -91,6 +91,7 @@ if __name__ == '__main__':
     output_mat = numpy.concatenate(output_mats)
 
     # output the feature representations using pickle
+    print 'Dumping stuff...'
     f = smart_open(output_file, 'wb')
     cPickle.dump(output_mat, f, cPickle.HIGHEST_PROTOCOL)
 

@@ -1,17 +1,7 @@
-# Copyright 2013    Yajie Miao    Carnegie Mellon University
-
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#  http://www.apache.org/licenses/LICENSE-2.0
-#
-# THIS CODE IS PROVIDED *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-# KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
-# WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
-# MERCHANTABLITY OR NON-INFRINGEMENT.
-# See the Apache 2 License for the specific language governing permissions and
-# limitations under the License.
+'''
+@Author Sean McLaughiln
+This is my copy of the dnn module. I'm adding some features so I can use DNN for regression rather than just classification.
+'''
 
 import cPickle
 import gzip
@@ -103,9 +93,6 @@ class DNN(object):
                          input=self.layers[-1].output,
                          n_in=self.hidden_layers_sizes[-1], n_out=self.n_outs)
 
-        #print self.hidden_layers_sizes[-1]
-        #print self.n_outs
-
         if self.n_outs > 0:
             self.layers.append(self.logLayer)
             self.params.extend(self.logLayer.params)
@@ -129,13 +116,8 @@ class DNN(object):
 
     def build_finetune_functions(self, train_shared_xy, valid_shared_xy, batch_size):
 
-        #print len(self.layers)
-        #print [T.shape(l.W)[0] for l in self.layers]
-
         (train_set_x, train_set_y) = train_shared_xy
         (valid_set_x, valid_set_y) = valid_shared_xy
-
-        #print T.shape(train_set_x), T.shape(train_set_y)
 
         index = T.lscalar('index')  # index to a [mini]batch
         learning_rate = T.fscalar('learning_rate')

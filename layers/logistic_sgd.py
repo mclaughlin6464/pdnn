@@ -32,6 +32,8 @@ class LogisticRegression(object):
         self.n_in = n_in
         self.n_out = n_out
 
+        print n_in, n_out, 'Log'
+
         self.type = 'fc'
 
         if W is None:
