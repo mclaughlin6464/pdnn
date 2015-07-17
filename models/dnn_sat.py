@@ -13,6 +13,9 @@
 # See the Apache 2 License for the specific language governing permissions and
 # limitations under the License.
 
+#Seems specifically adapted to speech processing. There are some things I want to take from hear, like the linear acivation
+#But it may be to specialized.
+
 import cPickle
 import gzip
 import os
