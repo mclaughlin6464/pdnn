@@ -73,6 +73,7 @@ if __name__ == '__main__':
     theano_rng = RandomStreams(numpy_rng.randint(2 ** 30))
     log('> ... building the model')
     # setup model
+    #TODO add my separate NN here?
     if cfg.do_dropout:
         dnn = DNN_Dropout(numpy_rng=numpy_rng, theano_rng = theano_rng, cfg = cfg)
     else:

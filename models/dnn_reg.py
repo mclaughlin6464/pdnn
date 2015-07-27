@@ -19,10 +19,12 @@ from theano.tensor.shared_randomstreams import RandomStreams
 from layers.logistic_sgd import LogisticRegression
 from layers.mlp import HiddenLayer, DropoutHiddenLayer, _dropout_from_layer
 
+from models.dnn import DNN
+
 from io_func import smart_open
 from io_func.model_io import _nnet2file, _file2nnet
 
-class DNN(object):
+class DNN_REG(DNN):
 
     def __init__(self, numpy_rng, theano_rng=None,
                  cfg = None,  # the network configuration
