@@ -67,7 +67,7 @@ def preprocess_feature_and_label(feature, label, opts):
     '''
 
     feature = make_context(feature, opts['lcxt'], opts['rcxt'])
-
+    #TODO Not sure what this will do the label array
     if label is not None:
         if opts.has_key('ignore-label'):
             ignore = opts['ignore-label']

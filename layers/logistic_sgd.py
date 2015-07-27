@@ -50,10 +50,12 @@ class LogisticRegression(object):
         self.delta_W = theano.shared(value = numpy.zeros_like(self.W.get_value(borrow=True)), name = 'delta_W')
         self.delta_b = theano.shared(value = numpy.zeros_like(self.b.get_value(borrow=True)), name = 'delta_b')
         # compute vector of class-membership probabilities in symbolic form
+        #TODO no longer has meaning. Remove softmax
         self.p_y_given_x = T.nnet.softmax(T.dot(input, self.W) + self.b)
         self.output = self.p_y_given_x
 
         # compute prediction as class
+        #TODO y_pred is a set of values, not an argmax
         self.y_pred = T.argmax(self.p_y_given_x, axis=1)
 
         # parameters of the model
@@ -61,6 +63,7 @@ class LogisticRegression(object):
         self.delta_params = [self.delta_W, self.delta_b]
 
     def negative_log_likelihood(self, y):
+        #TODO Change to a difference of vectors, as y will now be a label "array"
         return -T.mean(T.log(self.p_y_given_x)[T.arange(y.shape[0]), y])
 
     def errors(self, y):

@@ -34,6 +34,7 @@ from io_func.model_io import _file2nnet, log
 from utils.utils import parse_arguments
 from utils.network_config import NetworkConfig
 
+#TODO Take notes from this function, as it extracts the whole final layer rather than the argmax.
 if __name__ == '__main__':
 
     import sys

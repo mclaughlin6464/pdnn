@@ -43,19 +43,24 @@ class PickleDataRead(object):
         self.end_reading = False
 
     def load_next_partition(self, shared_xy):
+        print 'load_next_partition!'
         pfile_path = self.pfile_path_list[self.cur_pfile_index]
         if self.feat_mat is None or len(self.pfile_path_list) > 1:
+
             fopen = smart_open(pfile_path, 'rb')
             self.feat_mat, self.label_vec = cPickle.load(fopen)
+
             fopen.close()
             shared_x, shared_y = shared_xy
 
+            #TODO no longer label_vec, is array
             self.feat_mat, self.label_vec = \
                 preprocess_feature_and_label(self.feat_mat, self.label_vec, self.read_opts)
             if self.read_opts['random']:
                 shuffle_feature_and_label(self.feat_mat, self.label_vec)
 
             shared_x.set_value(self.feat_mat, borrow=True)
+            #TODO types wrong here? Maybe?
             shared_y.set_value(self.label_vec.astype(theano.config.floatX), borrow=True)
 
         self.cur_frame_num = len(self.feat_mat)
