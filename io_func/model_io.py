@@ -97,10 +97,15 @@ def _file2nnet(layers, set_layer_num = -1, filename='nnet.in',  factor=1.0):
     if set_layer_num == -1:
         set_layer_num = n_layers
 
+    #with open('myfile', 'w') as f:
+    #    f.write('')
+
     with smart_open(filename, 'rb') as fp:
         nnet_dict = json.load(fp)
     for i in xrange(set_layer_num):
         dict_a = 'W' + str(i)
+        #with open('myfile', 'a') as f:
+        #    f.write('*'*30+dict_a +'\n'+nnet_dict[dict_a])
         layer = layers[i]
         if layer.type == 'fc':
             layer.W.set_value(factor * np.asarray(string_2_array(nnet_dict[dict_a]), dtype=theano.config.floatX))
@@ -114,6 +119,8 @@ def _file2nnet(layers, set_layer_num = -1, filename='nnet.in',  factor=1.0):
             layer.W.set_value(W_array)
         dict_a = 'b' + str(i)
         layer.b.set_value(np.asarray(string_2_array(nnet_dict[dict_a]), dtype=theano.config.floatX))
+        #with open('myfile', 'a') as f:
+        #    f.write('-'*30+dict_a +'\n'+ nnet_dict[dict_a])
 
 def _cnn2file(conv_layers, filename='nnet.out', input_factor = 1.0, factor=[]):
     n_layers = len(conv_layers)

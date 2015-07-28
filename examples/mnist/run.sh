@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # two variables you need to set
-pdnndir=/home/mclaughlin6464/GitRepos/pdnn  # pointer to PDNN
+pdnndir=/home/sean/GitRepos/pdnn  # pointer to PDNN
 device=cpu #gpu0  # the device to be used. set it to "cpu" if you don't have GPUs
 
 # export environment variables

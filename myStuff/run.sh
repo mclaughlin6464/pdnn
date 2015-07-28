@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # two variables you need to set
-pdnndir=/home/mclaughlin6464/GitRepos/pdnn  # pointer to PDNN
+pdnndir=/home/sean/GitRepos/pdnn  # pointer to PDNN
 device=cpu #gpu0  # the device to be used. set it to "cpu" if you don't have GPUs
 
 # export environment variables
@@ -19,12 +19,13 @@ echo "Training the DNN model ..."
 python $pdnndir/cmds/run_DNN.py --train-data "milliTrain.pickle.gz" \
                                 --valid-data "milliValid.pickle.gz" \
                                 --nnet-spec "193:10:6" --wdir ./ \
-                                --l2-reg 0.0001 --lrate "C:0.1:200" --model-save-step 20 \
-                                --param-output-file dnn.param --cfg-output-file dnn.cfg  >& dnn.training.log
+                                --l2-reg 0.0001 --lrate "C:.1:100" --model-save-step 20 \
+                                --param-output-file dnn.param --cfg-output-file dnn.cfg  --regression 1
+                                #>& dnn.training.log
 
 # classification on the testing data; -1 means the final layer, that is, the classification softmax layer
 echo "Classifying with the DNN model ..."
-python $pdnndir/cmds/run_Extract_Feats.py --data "test.pickle.gz" \
+python $pdnndir/cmds/run_Extract_Feats.py --data "milliTest.pickle.gz" \
                                           --nnet-param dnn.param --nnet-cfg dnn.cfg \
                                           --output-file "dnn.classify.pickle.gz" --layer-index -1 \
                                           --batch-size 100 >& dnn.testing.log

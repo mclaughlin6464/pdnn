@@ -63,7 +63,7 @@ class DNN(object):
             self.x = T.matrix('x')
         else:
             self.x = input
-        #TODO a matrix now?
+
         self.y = T.ivector('y')
 
         for i in xrange(self.hidden_layers_number):

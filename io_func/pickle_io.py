@@ -64,6 +64,7 @@ class PickleDataRead(object):
             shared_y.set_value(self.label_vec.astype(theano.config.floatX), borrow=True)
 
         self.cur_frame_num = len(self.feat_mat)
+        print len(self.feat_mat), len(self.label_vec), self.feat_mat.shape
         self.cur_pfile_index += 1
 
         if self.cur_pfile_index >= len(self.pfile_path_list):   # the end of one epoch

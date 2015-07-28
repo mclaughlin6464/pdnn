@@ -8,7 +8,7 @@ import gzip
 
 if __name__ == '__main__':
 
-    df = pd.read_csv('/home/mclaughlin6464/GitRepos/ml4cosmosims/data/data.csv')
+    df = pd.read_csv('/home/sean/GitRepos/ml4cosmosims/data/data.csv')
     #Harshil says I shoudln't have to worry about this.
     '''
     Q = df.values

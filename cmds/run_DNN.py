@@ -26,6 +26,7 @@ from theano.tensor.shared_randomstreams import RandomStreams
 
 from models.dnn import DNN
 from models.dropout_nnet import DNN_Dropout
+from models.dnn_reg import DNN_REG
 
 from io_func.model_io import _nnet2file, _cfg2file, _file2nnet, log
 from utils.utils import parse_arguments
@@ -73,9 +74,10 @@ if __name__ == '__main__':
     theano_rng = RandomStreams(numpy_rng.randint(2 ** 30))
     log('> ... building the model')
     # setup model
-    #TODO add my separate NN here?
     if cfg.do_dropout:
         dnn = DNN_Dropout(numpy_rng=numpy_rng, theano_rng = theano_rng, cfg = cfg)
+    elif cfg.do_regression:
+        dnn = DNN_REG(numpy_rng=numpy_rng, theano_rng = theano_rng, cfg = cfg)
     else:
         dnn = DNN(numpy_rng=numpy_rng, theano_rng = theano_rng, cfg = cfg)
 
@@ -89,6 +91,7 @@ if __name__ == '__main__':
 
     # get the training, validation and testing function for the model
     log('> ... getting the finetuning functions')
+    #TODO fix error in train_fn
     train_fn, valid_fn = dnn.build_finetune_functions(
                 (cfg.train_x, cfg.train_y), (cfg.valid_x, cfg.valid_y),
                 batch_size=cfg.batch_size)
@@ -97,15 +100,19 @@ if __name__ == '__main__':
     while (cfg.lrate.get_rate() != 0):
         # one epoch of sgd training 
         train_error = train_sgd(train_fn, cfg)
-        log('> epoch %d, training error %f ' % (cfg.lrate.epoch, 100*numpy.mean(train_error)) + '(%)')
+        log('> epoch %d, training loss %f ' % (cfg.lrate.epoch, numpy.mean(train_error)))
         # validation 
         valid_error = validate_by_minibatch(valid_fn, cfg)
-        log('> epoch %d, lrate %f, validation error %f ' % (cfg.lrate.epoch, cfg.lrate.get_rate(), 100*numpy.mean(valid_error)) + '(%)')
+        log('> epoch %d, lrate %f, validation error %f ' % (cfg.lrate.epoch, cfg.lrate.get_rate(), numpy.mean(valid_error)))
+        #TODO fix learning rate decay
         cfg.lrate.get_next_rate(current_error = 100*numpy.mean(valid_error))
         # output nnet parameters and lrate, for training resume
         if cfg.lrate.epoch % cfg.model_save_step == 0:
             _nnet2file(dnn.layers, filename=wdir + '/nnet.tmp')
-            _lrate2file(cfg.lrate, wdir + '/training_state.tmp') 
+            _lrate2file(cfg.lrate, wdir + '/training_state.tmp')
+
+    print 'Here!'
+    print cfg.param_output_file, cfg.cfg_output_file
 
     # save the model and network configuration
     if cfg.param_output_file != '':

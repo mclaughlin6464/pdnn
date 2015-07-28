@@ -17,7 +17,7 @@
 import theano
 import theano.tensor as T
 from io_func.data_io import read_data_args, read_dataset
-from learn_rates import LearningRateExpDecay
+from learn_rates import LearningRateExpDecay, LearningRateConstant
 from utils import parse_lrate, parse_activation, parse_conv_spec, activation_to_txt, string_2_bool
 
 class NetworkConfig():
@@ -41,6 +41,8 @@ class NetworkConfig():
         self.do_dropout = False
         self.dropout_factor = []
         self.input_dropout_factor = 0.0
+
+        self.do_regression = False
 
         self.max_col_norm = None
         self.l1_reg = None
@@ -135,6 +137,9 @@ class NetworkConfig():
             self.dropout_factor = [float(factor) for factor in factors]
             if arguments.has_key('input_dropout_factor'):
                 self.input_dropout_factor = float(arguments['input_dropout_factor'])
+        #Added by me. Will see how this works in practice
+        if arguments.has_key('regression'):
+            self.do_regression = True
 
         if arguments.has_key('cfg_output_file'):
             self.cfg_output_file = arguments['cfg_output_file']

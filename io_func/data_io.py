@@ -25,6 +25,7 @@ import theano.tensor as T
 from utils.utils import string_2_bool, parse_ignore_label, parse_map_label
 from pfile_io import PfileDataRead, PfileDataReadStream
 from pickle_io import PickleDataRead
+from myStuff.pickle_io_2 import PickleDataRead2
 from kaldi_io import KaldiDataRead
 
 def read_data_args(data_spec):
@@ -80,7 +81,8 @@ def read_data_args(data_spec):
 
 def read_dataset(file_path_list, read_opts):
     if read_opts['type'] == 'pickle':
-        data_reader = PickleDataRead(file_path_list, read_opts)
+        #data_reader = PickleDataRead(file_path_list, read_opts)
+        data_reader = PickleDataRead2(file_path_list, read_opts)
     elif read_opts['type'] == 'pfile':
         if read_opts['stream']:
             data_reader = PfileDataReadStream(file_path_list, read_opts)
@@ -93,6 +95,6 @@ def read_dataset(file_path_list, read_opts):
 
     shared_xy = data_reader.make_shared()
     shared_x, shared_y = shared_xy
-    shared_y = T.cast(shared_y, 'int32')
+    #shared_y = T.cast(shared_y, 'int32')
 
     return data_reader, shared_xy, shared_x, shared_y
