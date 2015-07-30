@@ -84,7 +84,8 @@ class DNN_REG(DNN):
         #theano.printing.pydotprint(gparams, outfile="gparams.png", var_with_name_simple=True)
 
         # compute list of fine-tuning updates
-        updates = collections.OrderedDict()
+        #updates = collections.OrderedDict()
+        updates = {}
         for dparam, gparam in zip(self.delta_params, gparams):
             updates[dparam] = momentum * dparam - gparam*learning_rate
         for dparam, param in zip(self.delta_params, self.params):
