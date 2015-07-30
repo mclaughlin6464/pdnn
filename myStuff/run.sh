@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # two variables you need to set
-pdnndir=/home/sean/GitRepos/pdnn  # pointer to PDNN
+pdnndir=/home/mclaughlin6464/GitRepos/pdnn  # pointer to PDNN
 device=cpu #gpu0  # the device to be used. set it to "cpu" if you don't have GPUs
 
 # export environment variables
@@ -19,7 +19,7 @@ echo "Training the DNN model ..."
 python $pdnndir/cmds/run_DNN.py --train-data "milliTrain.pickle.gz" \
                                 --valid-data "milliValid.pickle.gz" \
                                 --nnet-spec "193:200:6" --wdir ./ \
-                                --l2-reg 0.0001 --lrate "C:.05:100" --model-save-step 20 \
+                                --l2-reg 0.0001 --lrate "C:0:30" --model-save-step 20 \
                                 --param-output-file dnn.param --cfg-output-file dnn.cfg  --regression 1
                                 #>& dnn.training.log
 

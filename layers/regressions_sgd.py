@@ -16,6 +16,8 @@ from layers.logistic_sgd import LogisticRegression
 import theano
 import theano.tensor as T
 
+#It'd be possible to have a hidden layer with no activation, but I also need the negative_log_likelikhood function
+
 class Regression(LogisticRegression):
     """ Class for multi-class logistic regression """
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # two variables you need to set
-pdnndir=/home/sean/GitRepos/pdnn  # pointer to PDNN
+pdnndir=/home/mclaughlin6464/GitRepos/pdnn  # pointer to PDNN
 device=cpu #gpu0  # the device to be used. set it to "cpu" if you don't have GPUs
 
 # export environment variables
@@ -14,14 +14,14 @@ wget http://www.iro.umontreal.ca/~lisa/deep/data/mnist/mnist.pkl.gz
 # split the dataset to training, validation and testing sets
 # you will see train.pickle.gz, valid.pickle.gz, test.pickle.gz
 echo "Preparing datasets ..."
-python data_prep.py
+#python data_prep.py
 
 # train DNN model
 echo "Training the DNN model ..."
 python $pdnndir/cmds/run_DNN.py --train-data "train.pickle.gz" \
                                 --valid-data "valid.pickle.gz" \
-                                --nnet-spec "784:500:500:10" --wdir ./ \
-                                --l2-reg 0.0001 --lrate "C:0.1:200" --model-save-step 20 \
+                                --nnet-spec "784:500:10" --wdir ./ \
+                                --l2-reg 0.0001 --lrate "C:0:200" --model-save-step 20 \
                                 --param-output-file dnn.param --cfg-output-file dnn.cfg  >& dnn.training.log
 
 # classification on the testing data; -1 means the final layer, that is, the classification softmax layer
@@ -36,7 +36,7 @@ python show_results.py dnn.classify.pickle.gz
 
 # train CNN model
 #echo "Training the CNN model ..."
-#python $pdnndir/cmds/run_CNN.py --train-data "train.pickle.gz" \
+python $pdnndir/cmds/run_CNN.py --train-data "train.pickle.gz" \
                                 --valid-data "valid.pickle.gz" \
                                 --conv-nnet-spec "1x28x28:20,5x5,p2x2:50,5x5,p2x2,f" --nnet-spec "512:10" --wdir ./ \
                                 --l2-reg 0.0001 --lrate "C:0.1:200" --model-save-step 20 \

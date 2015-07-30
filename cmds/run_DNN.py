@@ -123,6 +123,9 @@ if __name__ == '__main__':
         dnn.write_model_to_kaldi(cfg.kaldi_output_file)
         log('> ... the final Kaldi model is ' + cfg.kaldi_output_file) 
 
-    # remove the tmp files (which have been generated from resuming training) 
-    os.remove(wdir + '/nnet.tmp')
-    os.remove(wdir + '/training_state.tmp') 
+    # remove the tmp files (which have been generated from resuming training)
+    try:
+        os.remove(wdir + '/nnet.tmp')
+        os.remove(wdir + '/training_state.tmp')
+    except OSError:
+        pass

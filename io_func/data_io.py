@@ -95,6 +95,7 @@ def read_dataset(file_path_list, read_opts):
 
     shared_xy = data_reader.make_shared()
     shared_x, shared_y = shared_xy
+    #TODO comment out!
     #shared_y = T.cast(shared_y, 'int32')
 
     return data_reader, shared_xy, shared_x, shared_y
