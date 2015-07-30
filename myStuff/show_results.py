@@ -20,10 +20,11 @@ print pred_mat.mean(), pred_mat.max(), pred_mat.min()
 
 def negative_log_liklihood(y, y_pred):
     return np.mean((y_pred-y)**2)
-
+SST = negative_log_liklihood(test_labels, test_labels.mean())
+SSR = negative_log_liklihood(test_labels, pred_mat)
 print negative_log_liklihood(test_labels, test_labels.mean())
 print negative_log_liklihood(test_labels, pred_mat)
-
+'''
 #Calculate R^2
 means = test_labels.mean(axis = 0)
 
@@ -47,11 +48,11 @@ print SSres
 
 print (SStot/pred_mat.shape[0]).mean()
 print (SSres/pred_mat.shape[0]).mean()
-
-R2 = 1 - SSres/SStot
+'''
+R2 = 1 - SSR/SST
 for i in xrange(test_labels.shape[1]):
     print 'R^2 %d is '%(i+1),R2[i]
-
+'''
 from matplotlib import pyplot as plt
 
 plt.subplot(211)
@@ -70,4 +71,4 @@ plt.title('Relationship')
 plt.plot(np.linspace(test_data[:,0].min(), test_data[:,0].max()), np.linspace(test_labels[:,0].min(), test_labels[:,0].max()), 'r-')
 plt.scatter(test_labels[:,0],pred_mat[:, 0])
 plt.show()
-
+'''

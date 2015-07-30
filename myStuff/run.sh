@@ -6,7 +6,7 @@ device=cpu #gpu0  # the device to be used. set it to "cpu" if you don't have GPU
 
 # export environment variables
 export PYTHONPATH=$PYTHONPATH:$pdnndir
-export THEANO_FLAGS=mode=FAST_RUN,device=$device,floatX=float32,exception_verbosity=high,optimizer=None
+export THEANO_FLAGS=mode=FAST_RUN,device=$device,floatX=float32,blas.ldflags=-libsci
 
 # split the dataset to training, validation and testing sets
 # you will see train.pickle.gz, valid.pickle.gz, test.pickle.gz
