@@ -152,6 +152,7 @@ class DNN_REG(DNN):
                     desired_norms = T.clip(col_norms, 0, self.max_col_norm)
                     updates[W] = updated_W * (desired_norms / (1e-7 + col_norms))
 
+
         train_fn = theano.function(inputs=[theano.Param(learning_rate, default = 0.0001),
               theano.Param(momentum, default = 0.5)],
               outputs=self.errors,
