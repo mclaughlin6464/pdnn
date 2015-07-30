@@ -42,8 +42,11 @@ for i in xrange(pred_mat.shape[0]):
     if i < 10:
         print 'Pred:\t%.4f\nAct:\t%.4f\n'%(pred[0],test_labels[i,0])
 
-print SStot/pred_mat.shape[0]
-print SSres/pred_mat.shape[0]
+print SStot#This calculation is wrong!
+print SSres
+
+print (SStot/pred_mat.shape[0]).mean()
+print (SSres/pred_mat.shape[0]).mean()
 
 R2 = 1 - SSres/SStot
 for i in xrange(test_labels.shape[1]):

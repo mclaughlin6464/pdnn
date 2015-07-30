@@ -77,11 +77,11 @@ class DNN_REG(DNN):
 
         # compute the gradients with respect to the model parameters
 
-        theano.printing.pydotprint(self.finetune_cost, outfile="finetune_cost.png", var_with_name_simple=True)
+        #theano.printing.pydotprint(self.finetune_cost, outfile="finetune_cost.png", var_with_name_simple=True)
 
         gparams = T.grad(self.finetune_cost, self.params)
 
-        theano.printing.pydotprint(gparams, outfile="gparams.png", var_with_name_simple=True)
+        #theano.printing.pydotprint(gparams, outfile="gparams.png", var_with_name_simple=True)
 
         # compute list of fine-tuning updates
         updates = collections.OrderedDict()
@@ -99,7 +99,7 @@ class DNN_REG(DNN):
                     desired_norms = T.clip(col_norms, 0, self.max_col_norm)
                     updates[W] = updated_W * (desired_norms / (1e-7 + col_norms))
 
-        theano.printing.pydotprint(self.errors, outfile="errors.png", var_with_name_simple=True)
+        #theano.printing.pydotprint(self.errors, outfile="errors.png", var_with_name_simple=True)
 
         train_fn = theano.function(inputs=[index, theano.Param(learning_rate, default = 0.0001),
               theano.Param(momentum, default = 0.5)],
@@ -111,7 +111,7 @@ class DNN_REG(DNN):
                 self.y: train_set_y[index * batch_size:
                                     (index + 1) * batch_size]})
 
-        theano.printing.pydotprint(train_fn , outfile="train_fn.png", var_with_name_simple=True)
+        #theano.printing.pydotprint(train_fn , outfile="train_fn.png", var_with_name_simple=True)
 
         valid_fn = theano.function(inputs=[index],
               outputs=self.errors,
@@ -136,7 +136,8 @@ class DNN_REG(DNN):
         gparams = T.grad(self.finetune_cost, self.params)
 
         # compute list of fine-tuning updates
-        updates = collections.OrderedDict()
+        #updates = collections.OrderedDict()
+        updates = {}
         for dparam, gparam in zip(self.delta_params, gparams):
             updates[dparam] = momentum * dparam - gparam*learning_rate
         for dparam, param in zip(self.delta_params, self.params):
