@@ -80,7 +80,6 @@ if __name__ == '__main__':
         dnn = DNN_REG(numpy_rng=numpy_rng, theano_rng = theano_rng, cfg = cfg)
     else:
         dnn = DNN(numpy_rng=numpy_rng, theano_rng = theano_rng, cfg = cfg)
-
     # initialize model parameters
     # if not resuming training, initialized from the specified pre-training file
     # if resuming training, initialized from the tmp model file
@@ -110,9 +109,6 @@ if __name__ == '__main__':
         if cfg.lrate.epoch % cfg.model_save_step == 0:
             _nnet2file(dnn.layers, filename=wdir + '/nnet.tmp')
             _lrate2file(cfg.lrate, wdir + '/training_state.tmp')
-
-    print 'Here!'
-    print cfg.param_output_file, cfg.cfg_output_file
 
     # save the model and network configuration
     if cfg.param_output_file != '':

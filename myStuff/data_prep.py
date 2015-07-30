@@ -23,8 +23,19 @@ if __name__ == '__main__':
     '''
 
     Q = df.values #same here; this is really not recommended since
+    #Normalize by maximum value
+
+    for i in xrange(201):
+        if i != 194:
+            minval = Q[:,i].min()
+            maxval = Q[:, i].max()
+            #print val
+            Q[:,i]= (Q[:,i]- minval)/(maxval-minval)
     H = Q[:,0:193] #halo inputs; no baryonic quantities are included here
     M = Q[:,195:201] #galaxy masses
+
+    print H.mean(), H.max(), H.min()
+    print M.mean(), M.max(), M.min()
 
     training_size = 0.6
     valid_size = .5

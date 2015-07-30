@@ -32,8 +32,6 @@ class LearningRateConstant(LearningRate):
 
     def __init__(self, learning_rate = 0.08, epoch_num = 20):
 
-        print learning_rate, 'Constructor'
-
         self.learning_rate = learning_rate
         self.epoch = 1
         self.epoch_num = epoch_num

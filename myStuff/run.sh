@@ -18,8 +18,8 @@ echo "Preparing datasets ..."
 echo "Training the DNN model ..."
 python $pdnndir/cmds/run_DNN.py --train-data "milliTrain.pickle.gz" \
                                 --valid-data "milliValid.pickle.gz" \
-                                --nnet-spec "193:10:6" --wdir ./ \
-                                --l2-reg 0.0001 --lrate "C:.1:100" --model-save-step 20 \
+                                --nnet-spec "193:200:6" --wdir ./ \
+                                --l2-reg 0.0001 --lrate "C:.05:100" --model-save-step 20 \
                                 --param-output-file dnn.param --cfg-output-file dnn.cfg  --regression 1
                                 #>& dnn.training.log
 

@@ -34,7 +34,6 @@ class DNN_REG(DNN):
 
         #Amatrix now?
         self.y = T.matrix('y')
-
         if self.n_outs > 0:
             #remove logLayer
             self.layers.pop(-1)
@@ -46,7 +45,6 @@ class DNN_REG(DNN):
         self.regLayer = Regression(
                          input=self.layers[-1].output,
                          n_in=self.hidden_layers_sizes[-1], n_out=self.n_outs)
-
         if self.n_outs>0:
             #NOTE: Could just reassign in place rather than pop/append's
             self.layers.append(self.regLayer)
@@ -67,7 +65,6 @@ class DNN_REG(DNN):
             for i in xrange(self.hidden_layers_number):
                 W = self.layers[i].W
                 self.finetune_cost += self.l2_reg * T.sqr(W).sum()
-
 
     def build_finetune_functions(self, train_shared_xy, valid_shared_xy, batch_size):
 
