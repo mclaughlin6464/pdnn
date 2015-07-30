@@ -85,7 +85,7 @@ class DNN_REG(DNN):
 
         # compute list of fine-tuning updates
         #updates = collections.OrderedDict()
-        updates = {}
+        updates = theano.compat.python2x.OrderedDict()
         for dparam, gparam in zip(self.delta_params, gparams):
             updates[dparam] = momentum * dparam - gparam*learning_rate
         for dparam, param in zip(self.delta_params, self.params):
