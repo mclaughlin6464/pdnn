@@ -19,7 +19,7 @@ print test_labels.mean(), test_labels.max(), test_labels.min()
 print pred_mat.mean(), pred_mat.max(), pred_mat.min()
 
 def negative_log_liklihood(y, y_pred):
-    return np.mean((y_pred-y)**2)
+    return np.mean((y_pred-y)**2, axis = 0)
 SST = negative_log_liklihood(test_labels, test_labels.mean())
 SSR = negative_log_liklihood(test_labels, pred_mat)
 print negative_log_liklihood(test_labels, test_labels.mean())
