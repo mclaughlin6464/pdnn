@@ -60,6 +60,7 @@ class DNN(object):
             theano_rng = RandomStreams(numpy_rng.randint(2 ** 30))
         # allocate symbolic variables for the data
         if input == None:
+            #TODO CHANGE BACK
             self.x = T.matrix('x')
         else:
             self.x = input

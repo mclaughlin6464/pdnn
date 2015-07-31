@@ -34,6 +34,7 @@ class DNN_REG(DNN):
 
         #A matrix now, not a vector
         self.y = T.matrix('y')
+
         if self.n_outs > 0:
             #remove logLayer
             self.layers.pop(-1)

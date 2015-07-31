@@ -12,18 +12,18 @@ else:
     pred_mat = cPickle.load(open(pred_file, 'rb'))
 
 # load the testing set to get the labels
-test_data, test_labels = cPickle.load(gzip.open('milliTest.pickle.gz', 'rb'))
-
-print test_data.mean(), test_data.max(), test_data.min()
-print test_labels.mean(), test_labels.max(), test_labels.min()
-print pred_mat.mean(), pred_mat.max(), pred_mat.min()
+test_data, test_labels = cPickle.load(gzip.open('test.pickle.gz', 'rb'))
 
 def negative_log_liklihood(y, y_pred):
+    print np.mean((y-y_pred)**2)
     return np.sum((y_pred-y)**2, axis = 0)
-SST = negative_log_liklihood(test_labels, test_labels.mean())
+
+print pred_mat.shape, test_labels.shape
+
+SST = negative_log_liklihood(test_labels, test_labels.mean(axis = 0))
 SSR = negative_log_liklihood(test_labels, pred_mat)
-print negative_log_liklihood(test_labels, test_labels.mean())
-print negative_log_liklihood(test_labels, pred_mat)
+print SST
+print SSR
 '''
 #Calculate R^2
 means = test_labels.mean(axis = 0)
@@ -52,23 +52,24 @@ print (SSres/pred_mat.shape[0]).mean()
 R2 = 1 - SSR/SST
 for i in xrange(test_labels.shape[1]):
     print 'R^2 %d is '%(i+1),R2[i]
-'''
+
 from matplotlib import pyplot as plt
 
-plt.subplot(211)
-plt.scatter(test_data[:,0],pred_mat[:, 0])
-x1, x2, y1, y2 = plt.axis()
-plt.title('Prediction')
-plt.subplot(212)
-plt.scatter(test_data[:,0], test_labels[:,0])
-plt.title('Actual')
-x1, x2, y3, y4 = plt.axis()
-plt.axis([x1,x2,min(y1, y3), max(y2,y4)])
-plt.subplot(211)
-plt.axis([x1,x2,min(y1, y3), max(y2,y4)])
-plt.show()
-plt.title('Relationship')
-plt.plot(np.linspace(test_data[:,0].min(), test_data[:,0].max()), np.linspace(test_labels[:,0].min(), test_labels[:,0].max()), 'r-')
-plt.scatter(test_labels[:,0],pred_mat[:, 0])
-plt.show()
-'''
+for idx in xrange(2):
+    plt.subplot(211)
+    plt.scatter(test_data[:,idx],pred_mat[:, idx])
+    x1, x2, y1, y2 = plt.axis()
+    plt.title('Prediction')
+    plt.subplot(212)
+    plt.scatter(test_data[:,idx], test_labels[:,idx])
+    plt.title('Actual')
+    x1, x2, y3, y4 = plt.axis()
+    plt.axis([x1,x2,min(y1, y3), max(y2,y4)])
+    plt.subplot(211)
+    plt.axis([x1,x2,min(y1, y3), max(y2,y4)])
+    plt.show()
+    plt.title('Relationship')
+    plt.plot(np.linspace(test_labels[:,idx].min(), test_labels[:,idx].max()), np.linspace(test_labels[:,idx].min(), test_labels[:,idx].max()), 'r--')
+    plt.scatter(test_labels[:,idx],pred_mat[:, idx])
+    plt.show()
+
