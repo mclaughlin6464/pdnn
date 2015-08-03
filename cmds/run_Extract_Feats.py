@@ -28,6 +28,7 @@ from theano.tensor.shared_randomstreams import RandomStreams
 
 from models.dnn import DNN
 from models.cnn import CNN
+from models.dnn_reg import DNN_REG
 
 from io_func import smart_open
 from io_func.model_io import _file2nnet, log
@@ -64,6 +65,8 @@ if __name__ == '__main__':
     model = None
     if cfg.model_type == 'DNN':
         model = DNN(numpy_rng=numpy_rng, theano_rng = theano_rng, cfg = cfg)
+    elif cfg.model_type == 'DNN_REG':
+        model = DNN_REG(numpy_rng=numpy_rng, theano_rng = theano_rng, cfg = cfg)
     elif cfg.model_type == 'CNN':
         model = CNN(numpy_rng=numpy_rng, theano_rng = theano_rng, cfg = cfg, testing = True)
 

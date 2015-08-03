@@ -78,6 +78,7 @@ if __name__ == '__main__':
         dnn = DNN_Dropout(numpy_rng=numpy_rng, theano_rng = theano_rng, cfg = cfg)
     elif cfg.do_regression:
         dnn = DNN_REG(numpy_rng=numpy_rng, theano_rng = theano_rng, cfg = cfg)
+        cfg.model_type = 'DNN_REG'
     else:
         dnn = DNN(numpy_rng=numpy_rng, theano_rng = theano_rng, cfg = cfg)
     # initialize model parameters

@@ -12,18 +12,15 @@ else:
     pred_mat = cPickle.load(open(pred_file, 'rb'))
 
 # load the testing set to get the labels
-test_data, test_labels = cPickle.load(gzip.open('test.pickle.gz', 'rb'))
+test_data, test_labels = cPickle.load(gzip.open('milliTest.pickle.gz', 'rb'))
 
 def negative_log_liklihood(y, y_pred):
-    print np.mean((y-y_pred)**2)
     return np.sum((y_pred-y)**2, axis = 0)
-
-print pred_mat.shape, test_labels.shape
 
 SST = negative_log_liklihood(test_labels, test_labels.mean(axis = 0))
 SSR = negative_log_liklihood(test_labels, pred_mat)
-print SST
-print SSR
+#print SST
+#print SSR
 '''
 #Calculate R^2
 means = test_labels.mean(axis = 0)
@@ -55,7 +52,7 @@ for i in xrange(test_labels.shape[1]):
 
 from matplotlib import pyplot as plt
 
-for idx in xrange(2):
+for idx in xrange(6):
     plt.subplot(211)
     plt.scatter(test_data[:,idx],pred_mat[:, idx])
     x1, x2, y1, y2 = plt.axis()
