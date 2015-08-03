@@ -12,14 +12,14 @@ export THEANO_FLAGS=mode=FAST_RUN,device=$device,floatX=float32,exception_verbos
 # you will see train.pickle.gz, valid.pickle.gz, test.pickle.gz
 echo "Preparing datasets ..."
 #FYI Uses a lot of RAM to do the loading/splittling
-#python data_prep.py
+python data_prep.py
 
 # train DNN model
 echo "Training the DNN model ..."
 python $pdnndir/cmds/run_DNN.py --train-data "milliTrain.pickle.gz" \
                                 --valid-data "milliValid.pickle.gz" \
                                 --nnet-spec "193:20:6" --wdir ./ \
-                                --lrate "C:.1:100" --momentum 0 --model-save-step 20 \
+                                --lrate "C:.1:200" --momentum .5 --model-save-step 20 \
                                 --param-output-file dnn.param --cfg-output-file dnn.cfg  --regression 1
                                 #>& dnn.training.log
 
